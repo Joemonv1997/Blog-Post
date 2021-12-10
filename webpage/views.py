@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 def index(request):
-    return HttpResponse("Welcome to the app")
+    return render(request,"home.html")
 def register(request):
-    return HttpResponse("Welcome to the Register Page")
+    return render(request,"register.html")
 def login(request):
-    return HttpResponse("Welcome to the Login Page")
+    return render(request,"login.html")
 def main_page(request):
-    return HttpResponse("Welcome to the Main Page")
+    return render(request,"article.html")
