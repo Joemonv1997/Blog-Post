@@ -8,9 +8,15 @@ def login(request):
     return render(request,"login.html")
 def main_page(request):
     return render(request,"article.html")
-def add(request):
-    a=int(request.GET["num1"])
-    b=int(request.GET["num2"])
-    add_r=a+b
 
-    return render(request,"article_result.html",{'result':add_r})
+def login_user(request):
+    a=request.POST["username"]
+    b=request.POST["password"]
+
+    return render(request,"article.html",{'result':a})
+
+def register_user(request):
+    a=request.POST["username"]
+    b=request.POST["password"]
+
+    return render(request,"article.html",{'result':a})

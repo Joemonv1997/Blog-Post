@@ -1,3 +1,5 @@
 from django.db import models
 
-# Create your models here.
+class login_user:
+    name: str
+    password: str
