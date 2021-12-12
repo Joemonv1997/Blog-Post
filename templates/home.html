@@ -22,9 +22,14 @@
     
     <!-- Style -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}"> <!-- https://fontawesome.com/ -->
+	<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap" rel="stylesheet"> <!-- https://fonts.google.com/ -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/templatemo-xtra-blog.css' %}" rel="stylesheet">
   </head>
   <body>
-    
+
 
     <div class="container">
         <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
@@ -33,8 +38,8 @@
           </a>
     
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="article" class="nav-link px-2 link-secondary">Home</a></li>
-            <li><a href="/" class="nav-link px-2 link-dark">About</a></li>
+            <li><a href="/" class="nav-link px-2 link-secondary">Home</a></li>
+            <li><a href="article" class="nav-link px-2 link-dark">Article</a></li>
           </ul>
     
           <div class="col-md-3 text-end">
@@ -52,8 +57,97 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 
     {% block content %}
-    Home Page
+     <div class="container-fluid">
+        <main class="tm-main">          
+            <div class="row tm-row tm-mb-45">
+                <div class="col-12">
+                    <hr class="tm-hr-primary tm-mb-55">
+                    <img src="{% static 'img/about-01.jpg' %}" alt="Image" class="img-fluid">
+                </div>
+            </div>
+            <div class="row tm-row tm-mb-40">
+                <div class="col-12">                    
+                    <div class="mb-4">
+                        <h2 class="pt-2 tm-mb-40 tm-color-primary tm-post-title">About this Blog Post</h2>
+                        <p>
+                          Developed by joemon in Django 
+                        </p>                            
+                    </div>                    
+                </div>
+            </div>
+            <div class="row tm-row tm-mb-120">
+                <div class="col-lg-4 tm-about-col">
+                    <div class="tm-bg-gray tm-about-pad">
+                        <div class="text-center tm-mt-40 tm-mb-60">
+                            <i class="fas fa-bezier-curve fa-4x tm-color-primary"></i>                            
+                        </div>                        
+                        <h2 class="mb-3 tm-color-primary tm-post-title">Language</h2>
+                        <p class="mb-0 tm-line-height-short">
+                            Django Python
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 tm-about-col">
+                    <div class="tm-bg-gray tm-about-pad">
+                        <div class="text-center tm-mt-40 tm-mb-60">
+                            <i class="fas fa-users-cog fa-4x tm-color-primary"></i>                            
+                        </div>                        
+                        <h2 class="mb-3 tm-color-primary tm-post-title">Database</h2>
+                        <p class="mb-0 tm-line-height-short">
+                            SQLLite3
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 tm-about-col">
+                    <div class="tm-bg-gray tm-about-pad">
+                        <div class="text-center tm-mt-40 tm-mb-60">
+                            <i class="fab fa-creative-commons-sampling fa-4x tm-color-primary"></i>                            
+                        </div>                        
+                        <h2 class="mb-3 tm-color-primary tm-post-title">Developer</h2>
+                        <p class="mb-0 tm-line-height-short">
+                          Joemon V Velassery                        </p>
+                    </div>
+                </div>
+            </div>            
+            <div class="row tm-row tm-mb-60">
+                <div class="col-12">
+                    <hr class="tm-hr-primary  tm-mb-55">
+                </div>                
+                <div class="col-lg-6 tm-mb-60 tm-person-col">
+                    <div class="media tm-person">
+                        <img src="{% static 'img/about-04.jpg' %}" alt="Image" class="img-fluid mr-4">
+                        <div class="media-body">
+                            <h2 class="tm-color-primary tm-post-title mb-2">Joemon V Velassery</h2>
+                            <h3 class="tm-h3 mb-3">Developer</h3>
+                            <p class="mb-0 tm-line-height-short">
+                                Blog Post developed in django
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
     {% endblock %}
+    <footer class="row tm-row">
+      <hr class="col-12">
+      <div class="col-md-6 col-12 tm-color-gray">
+        <div class="tm-mb-65">
+          <a href="https://twitter.com/joemonv97" class="tm-social-link">
+              <i class="fab fa-twitter tm-social-icon"></i>
+          </a>
+          <a href="https://instagram.com" class="tm-social-link">
+              <i class="fab fa-instagram tm-social-icon"></i>
+          </a>
+          <a href="https://www.linkedin.com/in/joemonvvelassery/" class="tm-social-link">
+              <i class="fab fa-linkedin tm-social-icon"></i>
+          </a>
+      </div>
+      </div>
+      <div class="col-md-6 col-12 tm-color-gray tm-copyright">
+          Developed by Joemon V Velassery December 2021.
+      </div>
+      
+  </footer>
   </body>
 </html>
     
