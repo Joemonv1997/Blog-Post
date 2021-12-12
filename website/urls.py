@@ -18,7 +18,7 @@ from django.urls import path
 from django.urls.conf import include
 
 urlpatterns = [
-    path("webpage/",include("webpage.urls")),
+    path("",include("webpage.urls")),
     path('admin/', admin.site.urls),
 
 ]
