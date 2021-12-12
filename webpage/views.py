@@ -14,10 +14,18 @@ def main_page(request):
     return render(request,"article.html",{'tit':title_art})
 
 def login_user(request):
-    a=request.POST["username"]
-    b=request.POST["password"]
-
-    return render(request,"article.html",{'result':a})
+    if request.method=="POST":
+        a=request.POST["username"]
+        b=request.POST["password"]
+        user=auth.authenticate(username=a,password=b)
+        if user is not None:
+            auth.login(request,user)
+            return redirect("/article")
+        else:
+            messages.info(request,"Wrong Username or Password")
+            return render(request,"login.html")
+    else:
+        return render(request,"login.html")
 
 def register_user(request):
     if request.method=="POST":
