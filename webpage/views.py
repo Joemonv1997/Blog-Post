@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .models import title
 from django.contrib.auth.models import User,auth
+from django.contrib import messages
 def index(request):
     return render(request,"home.html")
 def register(request):
@@ -26,8 +27,18 @@ def register_user(request):
         d=request.POST["email"]
         e=request.POST["password"]
         f=request.POST["repeat_password"]
-        user=User.objects.create_user(username=c,password=e,last_name=b,email=d,first_name=a)
-        user.save()
-        return redirect("/article")
+        if e!=f:
+            messages.info(request,"Password Not Match")
+            return render(request,"register.html")
+        elif User.objects.filter(username=c).exists():
+            messages.info(request,"Username Taken")
+            return render(request,"register.html")
+        elif User.objects.filter(email=d).exists():
+            messages.info(request,"Email Already exist")
+            return render(request,"register.html")
+        else:
+            user=User.objects.create_user(username=c,password=e,last_name=b,email=d,first_name=a)
+            user.save()
+            return redirect("/article")
     else:
         return render(request,"register.html")
