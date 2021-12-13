@@ -50,3 +50,6 @@ def register_user(request):
             return redirect("/article")
     else:
         return render(request,"register.html")
+def logout(request):
+    auth.logout(request)
+    return redirect("/")

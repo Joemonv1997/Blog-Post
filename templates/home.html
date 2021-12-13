@@ -45,6 +45,8 @@
           <div class="col-md-3 text-end">
               {% if user.is_authenticated %}
               <h5> Hello {{user.first_name}} </h5>
+              <a href="/logout">
+                <button type="button" class="btn btn-primary">Logout</button></a>
               {% else %}
             
                 <a href="/login">
