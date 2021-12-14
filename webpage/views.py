@@ -13,7 +13,9 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from webpage import serializers
-
+from rest_framework.views import APIView
+from rest_framework import mixins
+from rest_framework import generics
 def index(request):
     return render(request,"home.html")
 def register(request):
@@ -106,3 +108,52 @@ def article_detail(request,pg_no):
     elif request.method=="DELETE":
         title_art.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ArticleView(APIView):
+    def get(self,request):
+        title_art=Article.objects.all()
+        sa=ArticleSerializer(title_art,many=True)
+        k=JSONRenderer().render(sa.data)
+        return Response(sa.data)
+    def post(self,request):
+        serializer = ArticleSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ArticleDetailView(APIView):
+    def get_object(self,id):
+        try:
+            return Article.objects.get(id=id)
+        except Article.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+    
+    def get(self,request,id):
+        title_art=self.get_object(id)
+        serializer = ArticleSerializer(title_art)
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+
+    def put(self,request,id):
+        title_art=self.get_object(id)
+        serializer = ArticleSerializer(title_art,request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def delete(self,request,id):
+        title_art=self.get_object(id)
+        title_art.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class GenericAPIView(mixins.ListModelMixin,
+                  mixins.CreateModelMixin,
+                  generics.GenericAPIView):   
+    serializer_class =ArticleSerializer
+    queryset=Article.objects.all()
+    def get(self,request):
+        return self.list(request)
+    def post(self, request):
+        return self.create(request)
+    
