@@ -4,18 +4,18 @@
 {% block content %}
 <h1>Article Page</h1>
 {% for i in tit %}
-<div class="row">
+  <div class="row">
     <div class="col-md-6">
       <div class="post-entry-1">
-        <h2>{{ i.title }}</h2>
+        <h2>{{ i.Title }}</h2>
         <p>{{ i.description }}</p>
         <div class="post-meta">
-          <span class="d-block"><a href="#">{{result}}</a> in <a href="#">News</a></span>
+          <span class="d-block"><a href="#">{{i.Email}}</a> in <a href="#">News</a></span>
           <span class="date-read">{{i.last_modified}} <span class="mx-1">&bullet;</span> 3 min read <span class="icon-star2"></span></span>
         </div>
       </div>
     </div>
     <br>
-    <br>
-{% endfor %}
+  <br> 
+ {% endfor %}
 {% endblock %}

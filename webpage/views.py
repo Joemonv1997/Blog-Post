@@ -1,17 +1,48 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render,redirect
 from django.http import HttpResponse
-from .models import title
+from .models import title,Article
 from django.contrib.auth.models import User,auth
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from .serializers import ArticleSerializer
+from rest_framework.renderers import JSONRenderer
+from rest_framework.parsers import JSONParser
+from django.views.decorators.csrf import csrf_exempt
+
+from webpage import serializers
+
 def index(request):
     return render(request,"home.html")
 def register(request):
     return render(request,"register.html")
 def login(request):
     return render(request,"login.html")
+
+@csrf_exempt
 def main_page(request):
-    title_art=title.objects.all()
-    return render(request,"article.html",{'tit':title_art})
+    if request.method=="GET":
+        title_art=Article.objects.all()
+        sa=ArticleSerializer(title_art,many=True)
+        k=JSONRenderer().render(sa.data)
+        # return render(request,"article.html",{'tit':k})
+        return JsonResponse(sa.data,safe=False)
+    elif request.method=="POST":
+        data = JSONParser().parse(request)
+        serializer = ArticleSerializer(data=data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data,status=201)
+        return JsonResponse(serializer.errors, status=400)
+
+            # return render(request,"article.html",{'tit':data})
+    else:
+        title_art=Article.objects.all()
+        sa=ArticleSerializer(title_art,many=True)
+        k=JSONRenderer().render(sa.data)
+        return render(request,"article.html",{'tit':k})
+
 
 def login_user(request):
     if request.method=="POST":

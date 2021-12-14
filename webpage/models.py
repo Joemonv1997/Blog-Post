@@ -19,4 +19,10 @@ class title(models.Model):
     def __str__(self):
         return self.title
 
-
+class Article(models.Model):
+    title= models.TextField()
+    description = models.TextField()
+    Email=models.EmailField()
+    last_modified = models.DateTimeField(auto_now_add = True)
+    def __str__(self):
+        return self.title
