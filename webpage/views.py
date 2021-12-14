@@ -9,7 +9,9 @@ from .serializers import ArticleSerializer
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from django.views.decorators.csrf import csrf_exempt
-
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 from webpage import serializers
 
 def index(request):
@@ -19,22 +21,21 @@ def register(request):
 def login(request):
     return render(request,"login.html")
 
-@csrf_exempt
+@api_view(["GET","POST"])
 def main_page(request):
     if request.method=="GET":
         title_art=Article.objects.all()
         sa=ArticleSerializer(title_art,many=True)
         k=JSONRenderer().render(sa.data)
         # return render(request,"article.html",{'tit':k})
-        return JsonResponse(sa.data,safe=False)
+        return Response(sa.data)
     elif request.method=="POST":
-        data = JSONParser().parse(request)
-        serializer = ArticleSerializer(data=data)
+        serializer = ArticleSerializer(data=request.data)
         
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data,status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             # return render(request,"article.html",{'tit':data})
     else:
@@ -84,3 +85,24 @@ def register_user(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+
+@api_view(["GET","PUT","DELETE"])
+def article_detail(request,pg_no):
+    try:
+        title_art=Article.objects.get(pk=pg_no)
+    except Article.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+    if request.method=="GET":
+        serializer = ArticleSerializer(title_art)
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
+    elif request.method=="PUT":
+        serializer = ArticleSerializer(title_art,request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    elif request.method=="DELETE":
+        title_art.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

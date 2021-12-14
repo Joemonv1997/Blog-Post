@@ -3,7 +3,7 @@ from .models import Article
 class ArticleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Article
-        fields = ('title', 'description', 'Email', 'last_modified')
+        fields = ('id','title', 'description', 'Email', 'last_modified')
     title= serializers.CharField()
     description = serializers.CharField()
     Email=serializers.EmailField()
